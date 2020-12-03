@@ -11,7 +11,13 @@ angular.module('g1b.calendar-heatmap', []).
         data: '=',
         color: '=?',
         overview: '=?',
-        handler: '=?'
+        handler: '=?',
+        over: '=?',
+        tooltip: '=?'
+      },
+      controller: function($scope){
+        // bool
+        $scope.tooltip = angular.isDefined($scope.tooltip);
       },
       replace: true,
       template: '<div class="calendar-heatmap"></div>',
@@ -242,7 +248,10 @@ angular.module('g1b.calendar-heatmap', []).
             })
             .style('opacity', 0)
             .on('mouseover', function(d) {
-              if ( scope.in_transition ) { return; }
+              if ( scope.over ) {
+                scope.over(d);
+              }
+              if ( !scope.tooltip ) { return; }
 
               // Construct tooltip
               var tooltip_html = '';
@@ -309,6 +318,7 @@ angular.module('g1b.calendar-heatmap', []).
                   .style('opacity', 1);
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( scope.in_transition ) { return; }
               scope.hideTooltip();
             })
@@ -355,6 +365,7 @@ angular.module('g1b.calendar-heatmap', []).
             })
             .attr('y', label_padding / 2)
             .on('mouseenter', function (year_label) {
+              if ( !scope.tooltip ) { return; }
               if ( scope.in_transition ) { return; }
 
               items.selectAll('.item-block-year')
@@ -366,6 +377,7 @@ angular.module('g1b.calendar-heatmap', []).
                 });
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( scope.in_transition ) { return; }
 
               items.selectAll('.item-block-year')
@@ -492,6 +504,10 @@ angular.module('g1b.calendar-heatmap', []).
               scope.drawChart();
             })
             .on('mouseover', function (d) {
+              if ( scope.over ) {
+                scope.over(d);
+              }
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               // Pulsating animation
@@ -554,6 +570,7 @@ angular.module('g1b.calendar-heatmap', []).
                   .style('opacity', 1);
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               // Set circle radius back to what it's supposed to be
@@ -623,6 +640,7 @@ angular.module('g1b.calendar-heatmap', []).
             })
             .attr('y', label_padding / 2)
             .on('mouseenter', function (d) {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               var selected_month = moment(d);
@@ -635,6 +653,7 @@ angular.module('g1b.calendar-heatmap', []).
                 });
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               items.selectAll('.item-circle')
@@ -695,6 +714,7 @@ angular.module('g1b.calendar-heatmap', []).
               return moment(d).format('dddd')[0];
             })
             .on('mouseenter', function (d) {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               var selected_day = moment(d);
@@ -707,6 +727,7 @@ angular.module('g1b.calendar-heatmap', []).
                 });
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               items.selectAll('.item-circle')
@@ -842,6 +863,10 @@ angular.module('g1b.calendar-heatmap', []).
             })
             .style('opacity', 0)
             .on('mouseover', function(d) {
+              if ( !scope.tooltip ) { return; }
+              if ( scope.over ) {
+                scope.over(d);
+              }
               if ( in_transition ) { return; }
 
               // Get date from the parent node
@@ -870,6 +895,7 @@ angular.module('g1b.calendar-heatmap', []).
                   .style('opacity', 1);
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
               scope.hideTooltip();
             })
@@ -916,6 +942,7 @@ angular.module('g1b.calendar-heatmap', []).
             })
             .attr('y', label_padding / 2)
             .on('mouseenter', function (weekday) {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               items.selectAll('.item-block-month')
@@ -927,6 +954,7 @@ angular.module('g1b.calendar-heatmap', []).
                 });
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               items.selectAll('.item-block-month')
@@ -982,6 +1010,7 @@ angular.module('g1b.calendar-heatmap', []).
               return moment(d).format('dddd')[0];
             })
             .on('mouseenter', function (d) {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               var selected_day = moment(d);
@@ -994,6 +1023,7 @@ angular.module('g1b.calendar-heatmap', []).
                 });
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               items.selectAll('.item-block-month')
@@ -1126,6 +1156,10 @@ angular.module('g1b.calendar-heatmap', []).
             })
             .style('opacity', 0)
             .on('mouseover', function(d) {
+              if ( scope.over ) {
+                scope.over(d);
+              }
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               // Get date from the parent node
@@ -1156,6 +1190,7 @@ angular.module('g1b.calendar-heatmap', []).
                   .style('opacity', 1);
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
               scope.hideTooltip();
             })
@@ -1202,6 +1237,7 @@ angular.module('g1b.calendar-heatmap', []).
             })
             .attr('y', label_padding / 2)
             .on('mouseenter', function (weekday) {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               items.selectAll('.item-block-week')
@@ -1213,6 +1249,7 @@ angular.module('g1b.calendar-heatmap', []).
                 });
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               items.selectAll('.item-block-week')
@@ -1241,6 +1278,7 @@ angular.module('g1b.calendar-heatmap', []).
               return moment(d).format('dddd')[0];
             })
             .on('mouseenter', function (d) {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               var selected_day = moment(d);
@@ -1253,6 +1291,7 @@ angular.module('g1b.calendar-heatmap', []).
                 });
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               items.selectAll('.item-block-week')
@@ -1315,6 +1354,10 @@ angular.module('g1b.calendar-heatmap', []).
             })
             .style('opacity', 0)
             .on('mouseover', function(d) {
+              if ( scope.over ) {
+                scope.over(d);
+              }
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               // Construct tooltip
@@ -1340,6 +1383,7 @@ angular.module('g1b.calendar-heatmap', []).
                   .style('opacity', 1);
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
               scope.hideTooltip();
             })
@@ -1395,6 +1439,7 @@ angular.module('g1b.calendar-heatmap', []).
             })
             .attr('y', label_padding / 2)
             .on('mouseenter', function (d) {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               var selected = itemScale(moment(d));
@@ -1409,6 +1454,7 @@ angular.module('g1b.calendar-heatmap', []).
                 });
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               items.selectAll('.item-block')
@@ -1450,6 +1496,7 @@ angular.module('g1b.calendar-heatmap', []).
               }
             })
             .on('mouseenter', function (project) {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               items.selectAll('.item-block')
@@ -1461,6 +1508,7 @@ angular.module('g1b.calendar-heatmap', []).
                 });
             })
             .on('mouseout', function () {
+              if ( !scope.tooltip ) { return; }
               if ( in_transition ) { return; }
 
               items.selectAll('.item-block')
